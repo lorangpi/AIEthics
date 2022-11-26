@@ -1,0 +1,49 @@
+(define 
+    (problem shopping)
+    (:domain supermarket)
+
+    (:objects
+        player1 - agent
+        cart1 - cart
+        onion - food
+        milk - food
+        pepper - food
+        sugar - food
+        banana - food
+        chocolate_milk - food
+        yellow_bell_pepper - food
+        strawberry - food
+        apples - food
+        oranges - food
+        banana - food
+        raspberry - food
+        sausage - food
+        steak - food
+        chicken - food
+        ham - food
+        brie_cheese - food
+        swiss_cheese - food
+        cheese_wheel - food
+        garlic - food
+        leek - food
+        red_bell_pepper - food
+        carrot - food
+        lettuce - food
+        avocado - food
+        broccoli - food
+        cucumber - food
+        fresh_fish - food
+        prepared_foods - food
+        strawberry_milk - food
+    )
+    (:htn
+:tasks (and (do_navigate) (do_get_cart) (do_navigate)  (do_get_item player1 chocolate_milk) (do_navigate) (do_get_item player1 red_bell_pepper) (do_navigate) (do_get_item player1 milk) (do_navigate) (do_get_item player1 apples) (do_navigate) (do_get_item player1 banana) (do_navigate) (do_get_item player1 leek) (do_navigate) (do_get_item player1 raspberry) (do_navigate) (do_exit))
+
+    )
+    (:init
+        (at player1 entrance)
+        (in_store player1)
+        (facing void)
+        (free_hands player1)
+    )
+)
