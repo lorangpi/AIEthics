@@ -1,0 +1,52 @@
+navigate player1 entrance pickup_cart
+face_object player1 pickup_cart void
+get_cart player1 cart1
+navigate player1 pickup_cart chicken0
+release_cart player1 cart1
+face_object player1 chicken0 cart1
+grab_food player1 chicken0 red_bell_pepper0
+face_cart player1 chicken0 cart1
+drop_food_cart player1 chicken0 cart1 chicken0
+grab_cart player1 cart1
+navigate player1 chicken0 red_bell_pepper0
+release_cart player1 cart1
+face_object player1 red_bell_pepper0 cart1
+grab_food player1 red_bell_pepper0 steak0
+face_cart player1 red_bell_pepper0 cart1
+drop_food_cart player1 red_bell_pepper0 cart1 red_bell_pepper0
+grab_cart player1 cart1
+navigate player1 red_bell_pepper0 steak0
+release_cart player1 cart1
+face_object player1 steak0 cart1
+grab_food player1 steak0 steak01
+face_cart player1 steak0 cart1
+drop_food_cart player1 steak0 cart1 steak0
+grab_cart player1 cart1
+navigate player1 steak0 steak01
+release_cart player1 cart1
+face_object player1 steak01 cart1
+grab_food player1 steak01 list
+face_cart player1 steak01 cart1
+drop_food_cart player1 steak01 cart1 steak01
+grab_cart player1 cart1
+navigate player1 steak01 counter
+buy player1
+navigate player1 counter exit1
+5
+shop player1 -> m0_init 1142 17 22
+do_get_cart player1 cart1 -> m2_do_get_cart 1145 1147
+shop player1 -> m0_shop 1148 59 66
+do_get_item player1 chicken0 cart1 -> m3_do_get_item 1153 1155 1159 1162 1165 1168
+shop player1 -> m0_shop 1170 163 176
+do_get_item player1 red_bell_pepper0 cart1 -> m3_do_get_item 1174 1177 1180 1182 1185 1189
+shop player1 -> m0_shop 1190 378 398
+do_get_item player1 steak0 cart1 -> m3_do_get_item 1199 1203 1206 1210 1213 1216
+shop player1 -> m0_shop 1217 713 735
+do_get_item player1 steak01 cart1 -> m3_do_get_item 1228 1231 1236 1238 1242 1245
+shop player1 -> m0_exit 1052 1301
+do_buy player1 -> m4_buy 1249 1279
+do_navigate player1 entrance pickup_cart -> m1_do_navigate 1143
+do_navigate player1 pickup_cart chicken0 -> m1_do_navigate 1149
+do_navigate player1 chicken0 red_bell_pepper0 -> m1_do_navigate 1171
+do_navigate player1 red_bell_pepper0 steak0 -> m1_do_navigate 1191
+do_navigate player1 steak0 steak01 -> m1_do_navigate 1218
