@@ -83,7 +83,7 @@ public class Agent extends SupermarketComponentImpl{
             //Dictionary action_dict = CollectionDictionary.main(action.split(" "));
             Dictionary action_dict = CollectionDictionary.main(action.split(" "));
             if (Next_action){
-            
+
             }
             //System.out.println(action_dict.get(1));
             if (((String) action_dict.get(1)).contains("navigate")){

@@ -11,7 +11,6 @@
   counter - object
   cart - object
   place - object
-  status - object
 )
 
 (:constants 
@@ -20,7 +19,6 @@
   pickup_cart - place
   entrance - place
   void - object
-  onshelf incart bought - status
 )
 
 (:predicates 
@@ -33,7 +31,6 @@
   (facing ?o - object)
   (in_store ?a - agent)
   (has_bought ?a - agent)
-  (has_status ?f - food ?s - status)
 )
 
 (:task shop
@@ -77,24 +74,11 @@
   :precondition (and (at ?a counter1) (in_store ?a))
   :ordered-subtasks(and (t1 (buy ?a ?c)) (t2 (navigate ?a counter1 exit1))) )
 
-(:method m5_init
-  :parameters (?a - agent c? cart ?f - food)
-  :task (shop ?a ?c ?f)
-  :precondition (and (in_store ?a) (at ?a entrance))
-  :ordered-subtasks(and (t1 (do_navigate ?a entrance pickup_cart)) (t2 (do_get_cart ?a ?c)) (t3 (do_navigate ?a pickup_cart ?f)) ) )
-
-(:method m6_shop
-  :parameters (?a - agent c? cart ?f - food)
-  :task (shop ?a ?c ?f)
-  :precondition (and (in_store ?a) )
-  :ordered-subtasks(and (t1 (do_get_item ?a ?f)) (t2 (do_navigate ?a ?f1 ?f2)) (t3 (shop ?c ?f))) ) 
-
-(:method m7_exit
-  :parameters (?a - agent c? cart ?f - food)
-  :task (shop ?a ?c ?f)
-  :precondition (and (in_store ?a) )
-  :ordered-subtasks(and (t1 (do_get_item ?a ?f)) (t2 (do_navigate ?a ?f1 ?f2)) (t3 (shop ?c ?f))) ) 
-
+;(:method m5_shop
+ ; :parameters (?a - agent c? cart ?f - food)
+  ;:task (shop ?a ?c ?f)
+  ;:precondition (and (in_store ?a) )
+  ;:ordered-subtasks(and (t1 (do_get_item ?a ?f)) (t2 (do_navigate ?a ?f1 ?f2)) (t3 (do_get_item ?a ?f2)) (t4 (do_exit ?a ?food ?c)) (t5(drop_food_cart ?a ?food ?c)) (t6(grab_cart ?a ?c))) ) 
 
 
 
