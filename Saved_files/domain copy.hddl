@@ -2,29 +2,23 @@
 
 (:requirements
   :typing
-  :strips
-  :fluents
   :hierachie)
 
 (:types
   player - object
   agent - player
-  subobject - object
-  food - subobject
+  food - object
   counter - object
   cart - object
   place - object
-  status - subobject
 )
 
 (:constants 
   exit1 - place
-  counter - counter
+  counter1 - counter
   pickup_cart - place
   entrance - place
   void - object
-  list - status
-  caddie - status
 )
 
 (:predicates 
@@ -37,13 +31,10 @@
   (facing ?o - object)
   (in_store ?a - agent)
   (has_bought ?a - agent)
-  (on ?o1 ?o2 - object)
-  (clear ?o - object)
 )
 
-
 (:task shop
-  :parameters (?a - agent) )
+  :parameters (?a - agent ?f1 - food ?f2 - food) )
 
 (:task do_navigate
   :parameters (?a - agent ?from - object ?to - object) )
@@ -54,30 +45,12 @@
 (:task do_get_item
   :parameters (?a - agent ?food - food ?c - cart) )
 
-(:task do_buy
-  :parameters (?a - agent) )
+(:task do_exit
+  :parameters (?a - agent ?c - cart) )
 
 
-(:method m0_init
-  :parameters (?a - agent ?c - cart)
-  :task (shop ?a )
-  :precondition (and (in_store ?a) (at ?a entrance))
-  :ordered-subtasks(and (t1 (do_navigate ?a entrance pickup_cart)) (t2 (do_get_cart ?a ?c)) (t3 (shop ?a)) ) )
 
-(:method m0_shop
-  :parameters (?a - agent ?o - object ?f - food)
-  :task (shop ?a )
-  :precondition (and (in_store ?a) (at ?a ?o) (has_cart ?a) )
-  :ordered-subtasks(and (t1 (do_navigate ?a ?o ?f)) (t2 (do_get_item ?a ?f)) (t3 (shop ?a)) ) ) 
-
-(:method m0_exit
-  :parameters (?a - agent)
-  :task (shop ?a )
-  :precondition (and (in_store ?a) (clear list))
-  :ordered-subtasks(and (t1 (do_buy ?a)) (t2 (navigate ?a counter exit1)) ) )
-
-
-(:method m1_do_navigate
+(:method m0_do_navigate
   :parameters ( ?a - agent  ?from - object ?to - object )
   :task (do_navigate ?a ?from ?to)
   :precondition (and (at ?a ?from) (in_store ?a))
@@ -95,19 +68,24 @@
   :precondition (and (in_store ?a) (at ?a ?food) (facing ?c) (has_cart ?a) (holding_cart ?c) (not(free_hands ?a)))
   :ordered-subtasks(and (t1 (release_cart ?a ?c)) (t2 (face_object ?a ?food ?c)) (t3 (grab_food ?a ?food)) (t4 (face_cart ?a ?food ?c)) (t5(drop_food_cart ?a ?food ?c)) (t6(grab_cart ?a ?c))) ) 
 
-(:method m4_buy
-  :parameters (?a - agent ?from ?to - object)
-  :task (do_buy ?a )
-  :precondition (and (in_store ?a) (clear list))
-  :ordered-subtasks(and (t1 (navigate ?a ?from ?to)) (t2 (buy ?a)) ) ) 
+(:method m4_do_exit
+  :parameters (?a - agent ?c - cart)
+  :task (do_exit ?a ?c)
+  :precondition (and (at ?a counter1) (in_store ?a))
+  :ordered-subtasks(and (t1 (buy ?a ?c)) (t2 (navigate ?a counter1 exit1))) )
 
+;(:method m5_shop
+ ; :parameters (?a - agent c? cart ?f - food)
+  ;:task (shop ?a ?c ?f)
+  ;:precondition (and (in_store ?a) )
+  ;:ordered-subtasks(and (t1 (do_get_item ?a ?f)) (t2 (do_navigate ?a ?f1 ?f2)) (t3 (do_get_item ?a ?f2)) (t4 (do_exit ?a ?food ?c)) (t5(drop_food_cart ?a ?food ?c)) (t6(grab_cart ?a ?c))) ) 
 
 
 
 (:action navigate
-  :parameters (?a - agent ?from - object ?to - object)
-  :precondition (and (at ?a ?from) (in_store ?a))
-  :effect (and (not(at ?a ?from)) (at ?a ?to)) )
+  :parameters (?a - agent ?p1 - object ?p2 - object)
+  :precondition (and (at ?a ?p1) (in_store ?a))
+  :effect (and (not(at ?a ?p1)) (at ?a ?p2)) )
 
 ;(:action exit
  ; :parameters (?a - agent ?c - counter ?)
@@ -125,8 +103,8 @@
   :effect (and(facing ?c) (not(facing ?o)) ))
 
 (:action buy
-  :parameters (?a - agent)
-  :precondition (and (at ?a counter) (in_store ?a) ) 
+  :parameters (?a - agent ?c - cart)
+  :precondition (and (at ?a counter1) (in_store ?a) ) 
   :effect  (has_bought ?a) )
 
 (:action get_cart
@@ -145,16 +123,16 @@
   :effect (and (not(free_hands ?a)) (holding_cart ?c )) )
 
 (:action grab_food
-  :parameters (?a - agent ?f - food ?next - subobject)
-  :precondition (and (facing ?f) (at ?a ?f) (free_hands ?a) (in_store ?a) (on ?f ?next) (clear ?f))
-  :effect (and (is_grabbed ?f) (not(free_hands ?a)) (not(on ?f ?next)) (clear ?next) ) )
+  :parameters (?a - agent ?f - food)
+  :precondition (and (facing ?f) (at ?a ?f) (free_hands ?a) (in_store ?a))
+  :effect (and (is_grabbed ?f) (not(free_hands ?a)) ) )
 
 (:action drop_food_cart
-  :parameters (?a - agent ?f - food ?c -cart ?prev - subobject)
-  :precondition (and (facing ?c) (is_grabbed ?f) (has_cart ?a ) (in_store ?a) (clear ?prev))
-  :effect (and (not(is_grabbed ?f)) (free_hands ?a) (in_cart ?f) (on ?f ?prev) (not(clear ?prev ))) )
+  :parameters (?a - agent ?f - food ?c -cart)
+  :precondition (and (facing ?c) (is_grabbed ?f) (has_cart ?a ) (in_store ?a))
+  :effect (and (not(is_grabbed ?f)) (free_hands ?a) (in_cart ?f)) )
 
-(:action none
+(:action nop
   :parameters ()
   :precondition ()
   :effect ())

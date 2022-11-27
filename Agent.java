@@ -65,9 +65,8 @@ public class Agent extends SupermarketComponentImpl{
 
         SupermarketObservation obs = getLastObservation();
         Player agent = obs.players[0];
-        
 
-        if (this.partialPlan.length() == 0){this.partialPlan = Get_partial_plan(obs);}
+        if (this.partialPlan.length() == 0){this.partialPlan = Get_initial_state(obs);}
         
         if (this.Plan.size() == 0 && !(this.Flag)){Get_plan(obs); this.Flag = true; this.Plan = Read_plan(); Next_action = true;}
 
@@ -75,15 +74,15 @@ public class Agent extends SupermarketComponentImpl{
             
             if (Next_action){
             this.action = this.Plan.remove(0);
-            Dictionary action_dict = CollectionDictionary.main(action.split(" "));
+            Dictionary action_dict = CollectionDictionary.main(action.replaceAll("\\d","").split(" "));
             System.out.println("\n\tNext action::");
             System.out.println(action_dict);
             Next_action = false;
             }
             //Dictionary action_dict = CollectionDictionary.main(action.split(" "));
-            Dictionary action_dict = CollectionDictionary.main(action.split(" "));
+            Dictionary action_dict = CollectionDictionary.main(action.replaceAll("\\d","").split(" "));
             if (Next_action){
-            
+
             }
             //System.out.println(action_dict.get(1));
             if (((String) action_dict.get(1)).contains("navigate")){
@@ -91,11 +90,11 @@ public class Agent extends SupermarketComponentImpl{
                 if (((String) action_dict.get(4)).contains("pickup")){
                     this.goalLocation = "cart";
                 }
-                else if (((String) action_dict.get(4)).contains("counter1")){
+                else if (((String) action_dict.get(4)).contains("counter")){
                     this.goalLocation = "register";
                 }
                 else{
-                this.goalLocation = (String) ((String) action_dict.get(4)).replace("_", " ");
+                this.goalLocation = (String) ((String) action_dict.get(4)).replace("_", " ");;
                 }
                 //System.out.println(this.goalLocation);
 
@@ -180,27 +179,44 @@ public class Agent extends SupermarketComponentImpl{
             }
          }
 
-    public String Get_partial_plan(com.supermarket.SupermarketObservation obs){
+    public String Get_initial_state(com.supermarket.SupermarketObservation obs){
         // Method that returns the partial plan from the observation in a HDDL file
         String[] shopping_list = obs.players[0].shopping_list;
-        String Plan = ":tasks (and (do_navigate) (do_get_cart) (do_navigate) ";
+        int[] shopping_quant = obs.players[0].list_quant;
+        String object;
+        String objects = "";
+        String init_state = "";
+        String buffer = "";
+
+        int list_counter = 0;
+
         // for loop
         for (String iterator: shopping_list) {
-            Plan = Plan + " (do_get_item player1 " + iterator.replace(" ", "_") +") (do_navigate)";
+            object = iterator.replace(" ", "_");
+            for(int item_counter = 0; item_counter < shopping_quant[list_counter]; item_counter++){
+                object += item_counter;
+                objects += object +" ";
+                if (buffer != ""){init_state += "(on " + buffer +" "+ object + ") ";}
+                else{init_state += "(clear " + object +") ";}
+                buffer = object;
+                }
+            list_counter += 1;
             }
-        Plan = Plan + " (do_exit))";
-        //System.out.println(Plan);
+        objects += "- food";
+        init_state += "(on " + buffer +" list) ";
+        System.out.println(init_state);
         //Instantiating the File class
         String filePath = "shopping.hddl";
         //Instantiating the Scanner class to read the file
         try {
         Path path = Paths.get("shopping.hddl");
         List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
-        lines.set(39, Plan);
+        lines.set(7, objects);
+        lines.set(19, init_state);
         Files.write(path, lines, StandardCharsets.UTF_8);
         }
         catch (IOException ex) {}
-        return Plan;
+        return init_state;
     }
 
 
