@@ -74,7 +74,7 @@
   :parameters (?a - agent ?from ?to - object)
   :task (shop ?a )
   :precondition (and (in_store ?a) (clear list))
-  :ordered-subtasks(and (t1 (navigate ?a ?from ?to)) (t1 (do_buy ?a)) (t2 (navigate ?a counter exit1)) ) )
+  :ordered-subtasks(and (t1 (navigate ?a ?from ?to)) (t2 (do_buy ?a)) (t3 (navigate ?a counter exit1)) ) )
 
 
 (:method m1_do_navigate
