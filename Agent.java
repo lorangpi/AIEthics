@@ -136,6 +136,9 @@ public class Agent extends SupermarketComponentImpl{
                 //Next_action = true;
             } else if(((String) action_dict.get(1)).contains("face_object")){
                 this.goalLocation = (String) ((String) action_dict.get(3)).replace("_", " ");
+                if (this.goalLocation.contains("counter")){
+                    this.goalLocation = "register";
+                }
                 if (((String) action_dict.get(4)).contains("pickup")){
                     this.goalLocation = "cart";
                 }
