@@ -4,23 +4,27 @@ Pierrick Lorang & Brennan Miller-Klugman
 11/27/22
 Shopping Agent #2
 
-Our proposed solution is closer to a cognitive architecture in the sense that it has three different layers. There is a STRIPS format HDDL codded domain and problem formulation
-for a planning layer to reason about the known states and actions in the domain. The planner is hierarchical so it has ordered tasks, methods and operators building up a 
-hierarchical task network. Some predicates defining the initial state are assumed, others are observed and the goal definition is modified each time a new supermakert instance is created.
-This planner communicates to a lower level control using a mapping of plan operators to control functions. The control layer is responsible of classical supermarket functions 
-(navigation, cart handling, picking-up an item, checking-out etc) and itself communicates to the lowest actuators / sensors layer by giving commands. There is a return status 
-from the sensor to the control layer giving information about the status of the execution of the command which is used to move on to the next action in the plan when done.
+Our proposed solution is closer to a cognitive architecture in that it has three different layers. There is an STRIPS encoded domain in HDDL format and the problem 
+formulation for a planner layer that allows reasoning about the known states and actions in the domain. The planner is hierarchical, so it orders the tasks, methods 
+and operators by building a hierarchical task network. Some predicates defining the initial state are assumed, others are observed, and the goal definition is changed 
+each time a new instance of supermakert is created.
 
-Most norms are implicitly formulated either at the planning level, the control layer or both of them. A sequence buffer insures that the agent gets back to its own cart, which could 
-have weaknesses in some time so we want to improve this for later (add a checker). A randomized navigation helps reduce the likelihood of our agents confronting each others and colliding.
-All norms are refered once in the file by their name and a small explanation (they are not metionned in each implicit formulation line).
+This planner communicates with a lower level control using a mapping between the operators in the plan and the control functions. The control layer is responsible for 
+the classic supermarket functions and itself communicates with the lower actuator/sensor layer by giving commands. There is a return status from the sensor to the 
+control layer, which gives information about the execution status of the command and is used to move to the next action in the plan when it is completed.
 
-There is no feedback yet from the control layer to the planning layer in case of failure, but that is our plan for the future and last assignment: triggering replanning in the 
-case of anticipated norm violation (like an ethical governor cf Arkin architecture).
+Most norms are formulated implicitly at either the plan level, the control layer level, or both. A sequence buffer ensures that the agent returns to its own cart, 
+which might have weaknesses at some point; we want to improve that for later (add a checker). Random navigation helps reduce the likelihood that our agents will 
+collide with each other. In cases where there is a chance of collision, a checker (ethical governor like, cf. Arkin architecture) anticipates it and guides our agents accordingly. All norms 
+are referenced once in the file by name with a small explanation (they are not mentioned in every line of implicit programing).
+
+There is no feedback from the control layer to the planning layer in case of failure (or better, anticipated norm violation) yet, but this is what we plan for the 
+future and the last task: to trigger replanning in case of an anticipated norm violation (improving the ethical governor).
 
 Referances:
     - Java API https://docs.oracle.com/javase/7/docs/api/
     - W3 schools https://www.w3schools.com/java/ (to brush up on how to use Array Lists and random generators)
+    - Lilotane HTN planner https://github.com/domschrei/lilotane
  */
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -103,7 +107,7 @@ public class Agent extends SupermarketComponentImpl {
         }
 
         if (this.Plan.size() == 0 && !(this.Flag)) {
-            Get_plan(obs);
+            Get_plan(obs); 
             this.Flag = true;
             this.Plan = Read_plan();
             Next_action = true;
@@ -197,7 +201,7 @@ public class Agent extends SupermarketComponentImpl {
                 Next_action = true;
             } else if (!(((String) action_dict.get(1)).contains("nop")) || !(action_dict.isEmpty())) {
                 interactWithObject();
-                interactWithObject();
+                interactWithObject();// InteractionCancellationNorm: Several norms are implicitely defined in the planner i.e. are ordered by the planning actions and can't occur otherwise. It's the case of the interactions.
                 Next_action = true;
             } else {
             }

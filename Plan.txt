@@ -1,28 +1,49 @@
 navigate player1 entrance pickup_cart
 face_object player1 pickup_cart void
 get_cart player1 cart1
-navigate player1 pickup_cart cucumber0
+navigate player1 pickup_cart apples0
+release_cart player1 cart1
+face_object player1 apples0 cart1
+grab_food player1 apples0 cucumber0
+face_cart player1 apples0 cart1
+drop_food_cart player1 apples0 cart1 apples0
+grab_cart_random_move player1 cart1
+navigate player1 apples0 cucumber0
 release_cart player1 cart1
 face_object player1 cucumber0 cart1
-grab_food player1 cucumber0 avocado0
+grab_food player1 cucumber0 milk0
 face_cart player1 cucumber0 cart1
 drop_food_cart player1 cucumber0 cart1 cucumber0
 grab_cart_random_move player1 cart1
-navigate player1 cucumber0 avocado0
+navigate player1 cucumber0 milk0
+release_cart player1 cart1
+face_object player1 milk0 cart1
+grab_food player1 milk0 swiss_cheese0
+face_cart player1 milk0 cart1
+drop_food_cart player1 milk0 cart1 milk0
+grab_cart_random_move player1 cart1
+navigate player1 milk0 swiss_cheese0
+release_cart player1 cart1
+face_object player1 swiss_cheese0 cart1
+grab_food player1 swiss_cheese0 avocado0
+face_cart player1 swiss_cheese0 cart1
+drop_food_cart player1 swiss_cheese0 cart1 swiss_cheese0
+grab_cart_random_move player1 cart1
+navigate player1 swiss_cheese0 avocado0
 release_cart player1 cart1
 face_object player1 avocado0 cart1
-grab_food player1 avocado0 broccoli0
+grab_food player1 avocado0 yellow_bell_pepper0
 face_cart player1 avocado0 cart1
 drop_food_cart player1 avocado0 cart1 avocado0
 grab_cart_random_move player1 cart1
-navigate player1 avocado0 broccoli0
+navigate player1 avocado0 yellow_bell_pepper0
 release_cart player1 cart1
-face_object player1 broccoli0 cart1
-grab_food player1 broccoli0 list
-face_cart player1 broccoli0 cart1
-drop_food_cart player1 broccoli0 cart1 broccoli0
+face_object player1 yellow_bell_pepper0 cart1
+grab_food player1 yellow_bell_pepper0 list
+face_cart player1 yellow_bell_pepper0 cart1
+drop_food_cart player1 yellow_bell_pepper0 cart1 yellow_bell_pepper0
 grab_cart_random_move player1 cart1
-navigate player1 broccoli0 counter
+navigate player1 yellow_bell_pepper0 counter
 release_cart player1 cart1
 face_object player1 counter cart1
 buy player1
@@ -30,18 +51,27 @@ face_cart player1 counter cart1
 grab_cart_exit player1 cart1
 navigate player1 counter exit
 5
-shop player1 -> m0_init 778 17 21
-do_get_cart player1 cart1 -> m2_do_get_cart 781 783
-shop player1 -> m0_shop 785 57 64
-do_get_item player1 cucumber0 cart1 -> m3_do_get_item 788 791 795 798 801 803
-shop player1 -> m0_shop 805 169 201
-do_get_item player1 avocado0 cart1 -> m3_do_get_item 809 813 816 819 821 824
-shop player1 -> m0_shop 828 401 424
-do_get_item player1 broccoli0 cart1 -> m3_do_get_item 831 835 840 843 848 850
-shop player1 -> m0_buy 853 689 963
-do_buy player1 -> m4_do_buy 859 864 873 892 919
-do_navigate player1 entrance pickup_cart -> m1_do_navigate 779
-do_navigate player1 pickup_cart cucumber0 -> m1_do_navigate 786
-do_navigate player1 cucumber0 avocado0 -> m1_do_navigate 806
-do_navigate player1 avocado0 broccoli0 -> m1_do_navigate 829
-shop player1 -> m0_exit 964
+shop player1 -> m0_init 2554 17 21
+do_get_cart player1 cart1 -> m2_do_get_cart 2557 2559
+shop player1 -> m0_shop 2561 61 68
+do_get_item player1 apples0 cart1 -> m3_do_get_item 2565 2567 2570 2574 2577 2580
+shop player1 -> m0_shop 2581 184 223
+do_get_item player1 cucumber0 cart1 -> m3_do_get_item 2586 2588 2592 2594 2598 2601
+shop player1 -> m0_shop 2602 525 552
+do_get_item player1 milk0 cart1 -> m3_do_get_item 2608 2610 2616 2618 2623 2627
+shop player1 -> m0_shop 2631 986 1013
+do_get_item player1 swiss_cheese0 cart1 -> m3_do_get_item 2636 2638 2643 2648 2652 2656
+shop player1 -> m0_shop 2660 1436 1463
+do_get_item player1 avocado0 cart1 -> m3_do_get_item 2666 2670 2673 2679 2681 2686
+shop player1 -> m0_shop 2687 1911 1937
+do_get_item player1 yellow_bell_pepper0 cart1 -> m3_do_get_item 2696 2701 2704 2707 2711 2716
+shop player1 -> m0_buy 2718 2414 2914
+do_buy player1 -> m4_do_buy 2726 2730 2739 2763 2827
+do_navigate player1 entrance pickup_cart -> m1_do_navigate 2555
+do_navigate player1 pickup_cart apples0 -> m1_do_navigate 2562
+do_navigate player1 apples0 cucumber0 -> m1_do_navigate 2582
+do_navigate player1 cucumber0 milk0 -> m1_do_navigate 2603
+do_navigate player1 milk0 swiss_cheese0 -> m1_do_navigate 2632
+do_navigate player1 swiss_cheese0 avocado0 -> m1_do_navigate 2661
+do_navigate player1 avocado0 yellow_bell_pepper0 -> m1_do_navigate 2688
+shop player1 -> m0_exit 2915
