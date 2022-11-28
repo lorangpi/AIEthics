@@ -1,77 +1,47 @@
 navigate player1 entrance pickup_cart
 face_object player1 pickup_cart void
 get_cart player1 cart1
-navigate player1 pickup_cart avocado0
+navigate player1 pickup_cart cucumber0
+release_cart player1 cart1
+face_object player1 cucumber0 cart1
+grab_food player1 cucumber0 avocado0
+face_cart player1 cucumber0 cart1
+drop_food_cart player1 cucumber0 cart1 cucumber0
+grab_cart_random_move player1 cart1
+navigate player1 cucumber0 avocado0
 release_cart player1 cart1
 face_object player1 avocado0 cart1
-grab_food player1 avocado0 red_bell_pepper0
+grab_food player1 avocado0 broccoli0
 face_cart player1 avocado0 cart1
 drop_food_cart player1 avocado0 cart1 avocado0
-grab_cart player1 cart1
-navigate player1 avocado0 red_bell_pepper0
+grab_cart_random_move player1 cart1
+navigate player1 avocado0 broccoli0
 release_cart player1 cart1
-face_object player1 red_bell_pepper0 cart1
-grab_food player1 red_bell_pepper0 red_bell_pepper01
-face_cart player1 red_bell_pepper0 cart1
-drop_food_cart player1 red_bell_pepper0 cart1 red_bell_pepper0
-grab_cart player1 cart1
-navigate player1 red_bell_pepper0 red_bell_pepper01
-release_cart player1 cart1
-face_object player1 red_bell_pepper01 cart1
-grab_food player1 red_bell_pepper01 strawberry_milk0
-face_cart player1 red_bell_pepper01 cart1
-drop_food_cart player1 red_bell_pepper01 cart1 red_bell_pepper01
-grab_cart player1 cart1
-navigate player1 red_bell_pepper01 strawberry_milk0
-release_cart player1 cart1
-face_object player1 strawberry_milk0 cart1
-grab_food player1 strawberry_milk0 steak0
-face_cart player1 strawberry_milk0 cart1
-drop_food_cart player1 strawberry_milk0 cart1 strawberry_milk0
-grab_cart player1 cart1
-navigate player1 strawberry_milk0 steak0
-release_cart player1 cart1
-face_object player1 steak0 cart1
-grab_food player1 steak0 milk0
-face_cart player1 steak0 cart1
-drop_food_cart player1 steak0 cart1 steak0
-grab_cart player1 cart1
-navigate player1 steak0 milk0
-release_cart player1 cart1
-face_object player1 milk0 cart1
-grab_food player1 milk0 list
-face_cart player1 milk0 cart1
-drop_food_cart player1 milk0 cart1 milk0
-grab_cart player1 cart1
-navigate player1 milk0 counter
+face_object player1 broccoli0 cart1
+grab_food player1 broccoli0 list
+face_cart player1 broccoli0 cart1
+drop_food_cart player1 broccoli0 cart1 broccoli0
+grab_cart_random_move player1 cart1
+navigate player1 broccoli0 counter
 release_cart player1 cart1
 face_object player1 counter cart1
 buy player1
 face_cart player1 counter cart1
-grab_cart player1 cart1
+grab_cart_exit player1 cart1
 navigate player1 counter exit
 5
-shop player1 -> m0_init 2554 17 21
-do_get_cart player1 cart1 -> m2_do_get_cart 2557 2559
-shop player1 -> m0_shop 2560 60 69
-do_get_item player1 avocado0 cart1 -> m3_do_get_item 2564 2568 2570 2574 2577 2580
-shop player1 -> m0_shop 2581 183 223
-do_get_item player1 red_bell_pepper0 cart1 -> m3_do_get_item 2585 2588 2591 2595 2598 2601
-shop player1 -> m0_shop 2603 523 552
-do_get_item player1 red_bell_pepper01 cart1 -> m3_do_get_item 2607 2611 2615 2619 2623 2627
-shop player1 -> m0_shop 2629 986 1013
-do_get_item player1 strawberry_milk0 cart1 -> m3_do_get_item 2635 2641 2644 2648 2652 2656
-shop player1 -> m0_shop 2657 1435 1462
-do_get_item player1 steak0 cart1 -> m3_do_get_item 2665 2669 2673 2678 2683 2686
-shop player1 -> m0_shop 2688 1909 1937
-do_get_item player1 milk0 cart1 -> m3_do_get_item 2695 2701 2704 2708 2712 2716
-shop player1 -> m0_buy 2720 2415 2913
-do_buy player1 -> m4_do_buy 2725 2729 2739 2764 2827
-do_navigate player1 entrance pickup_cart -> m1_do_navigate 2555
-do_navigate player1 pickup_cart avocado0 -> m1_do_navigate 2561
-do_navigate player1 avocado0 red_bell_pepper0 -> m1_do_navigate 2582
-do_navigate player1 red_bell_pepper0 red_bell_pepper01 -> m1_do_navigate 2604
-do_navigate player1 red_bell_pepper01 strawberry_milk0 -> m1_do_navigate 2630
-do_navigate player1 strawberry_milk0 steak0 -> m1_do_navigate 2658
-do_navigate player1 steak0 milk0 -> m1_do_navigate 2689
-shop player1 -> m0_exit 2914
+shop player1 -> m0_init 778 17 21
+do_get_cart player1 cart1 -> m2_do_get_cart 781 783
+shop player1 -> m0_shop 785 57 64
+do_get_item player1 cucumber0 cart1 -> m3_do_get_item 788 791 795 798 801 803
+shop player1 -> m0_shop 805 169 201
+do_get_item player1 avocado0 cart1 -> m3_do_get_item 809 813 816 819 821 824
+shop player1 -> m0_shop 828 401 424
+do_get_item player1 broccoli0 cart1 -> m3_do_get_item 831 835 840 843 848 850
+shop player1 -> m0_buy 853 689 963
+do_buy player1 -> m4_do_buy 859 864 873 892 919
+do_navigate player1 entrance pickup_cart -> m1_do_navigate 779
+do_navigate player1 pickup_cart cucumber0 -> m1_do_navigate 786
+do_navigate player1 cucumber0 avocado0 -> m1_do_navigate 806
+do_navigate player1 avocado0 broccoli0 -> m1_do_navigate 829
+shop player1 -> m0_exit 964

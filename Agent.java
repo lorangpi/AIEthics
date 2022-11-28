@@ -129,7 +129,7 @@ public class Agent extends SupermarketComponentImpl {
                 action("toggle", true, obs);
                 Next_action = true;
                 System.out.println("\n\tRelease::");
-            } else if (((String) action_dict.get(1)).contains("grab_cart")) {
+            } else if (((String) action_dict.get(1)).contains("grab_cart_random_move")) {
                 int size = this.aisleHistory.size();
                 if (this.counter == -1) {
                     this.counter = this.rand.nextInt(3) + 4; // random number between 4 and 6
@@ -142,7 +142,9 @@ public class Agent extends SupermarketComponentImpl {
                     this.counter = -1;
                     Next_action = true;
                 }
-
+            } else if (((String) action_dict.get(1)).contains("grab_cart_exit")) {
+                hasCart = !hasCart;
+                Next_action = true;
             } else if (((String) action_dict.get(1)).contains("buy")) {
                 this.goalLocation = "register";
                 Go_to(obs, agent, this.goalLocation);
@@ -535,7 +537,7 @@ public class Agent extends SupermarketComponentImpl {
             // EntranceOnlyNorm: Implicit in both the plan and the lower level navigation, the agent can only go to an exit to leave the store
             // BlockingExitNorm: Implicit in the navigation system (and planning again), the agent directly exits when the items have been bought
             System.out.println("\n\tBought -> Exit::");
-            
+
             if (obs.northOfExitRow(obs.players[0])) { // while in aisle hub, move north/south until in line with exit
                 action("south", false, obs);
             } else if (obs.southOfExitRow(obs.players[0])) { // while in aisle hub, move north/south until in line with exit

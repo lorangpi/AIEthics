@@ -99,13 +99,13 @@
   :parameters (?a - agent ?food - food ?c - cart)
   :task (do_get_item ?a ?food ?c)
   :precondition (and (in_store ?a) (at ?a ?food) (facing ?c) (has_cart ?a) (holding_cart ?c) (not(free_hands ?a)))
-  :ordered-subtasks(and (t1 (release_cart ?a ?c)) (t2 (face_object ?a ?food ?c)) (t3 (grab_food ?a ?food)) (t4 (face_cart ?a ?food ?c)) (t5(drop_food_cart ?a ?food ?c)) (t6(grab_cart ?a ?c))) ) 
+  :ordered-subtasks(and (t1 (release_cart ?a ?c)) (t2 (face_object ?a ?food ?c)) (t3 (grab_food ?a ?food)) (t4 (face_cart ?a ?food ?c)) (t5(drop_food_cart ?a ?food ?c)) (t6(grab_cart_random_move ?a ?c))) ) 
 
 (:method m4_do_buy
   :parameters (?a - agent ?register - counter ?c - cart)
   :task (do_buy ?a )
   :precondition (and (in_store ?a) (at ?a ?register) (facing ?c) (has_cart ?a) (holding_cart ?c) (not(free_hands ?a)) (clear list))
-  :ordered-subtasks(and (t2 (release_cart ?a ?c)) (t3 (face_object ?a ?register ?c)) (t4 (buy ?a)) (t5 (face_cart ?a ?register ?c)) (t6(grab_cart ?a ?c)) ) ) 
+  :ordered-subtasks(and (t2 (release_cart ?a ?c)) (t3 (face_object ?a ?register ?c)) (t4 (buy ?a)) (t5 (face_cart ?a ?register ?c)) (t6(grab_cart_exit ?a ?c)) ) ) 
 
 
 
@@ -145,7 +145,12 @@
   :precondition (and (holding_cart ?c ) (in_store ?a) (has_cart ?a ) (not(free_hands ?a)))
   :effect (and (free_hands ?a) (not(holding_cart ?c )) ) )
 
-(:action grab_cart
+(:action grab_cart_random_move
+  :parameters (?a - agent ?c - cart)
+  :precondition (and (not(holding_cart ?c )) (in_store ?a) (has_cart ?a ) (free_hands ?a) (facing ?c))
+  :effect (and (not(free_hands ?a)) (holding_cart ?c )) )
+
+(:action grab_cart_exit
   :parameters (?a - agent ?c - cart)
   :precondition (and (not(holding_cart ?c )) (in_store ?a) (has_cart ?a ) (free_hands ?a) (facing ?c))
   :effect (and (not(free_hands ?a)) (holding_cart ?c )) )
