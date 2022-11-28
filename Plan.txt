@@ -1,136 +1,77 @@
 navigate player1 entrance pickup_cart
 face_object player1 pickup_cart void
 get_cart player1 cart1
-navigate player1 pickup_cart fresh_fish0
+navigate player1 pickup_cart avocado0
 release_cart player1 cart1
-face_object player1 fresh_fish0 cart1
-grab_food player1 fresh_fish0 fresh_fish01
-face_cart player1 fresh_fish0 cart1
-drop_food_cart player1 fresh_fish0 cart1 fresh_fish0
+face_object player1 avocado0 cart1
+grab_food player1 avocado0 red_bell_pepper0
+face_cart player1 avocado0 cart1
+drop_food_cart player1 avocado0 cart1 avocado0
 grab_cart player1 cart1
-navigate player1 fresh_fish0 fresh_fish01
-release_cart player1 cart1
-face_object player1 fresh_fish01 cart1
-grab_food player1 fresh_fish01 fresh_fish012
-face_cart player1 fresh_fish01 cart1
-drop_food_cart player1 fresh_fish01 cart1 fresh_fish01
-grab_cart player1 cart1
-navigate player1 fresh_fish01 fresh_fish012
-release_cart player1 cart1
-face_object player1 fresh_fish012 cart1
-grab_food player1 fresh_fish012 strawberry0
-face_cart player1 fresh_fish012 cart1
-drop_food_cart player1 fresh_fish012 cart1 fresh_fish012
-grab_cart player1 cart1
-navigate player1 fresh_fish012 strawberry0
-release_cart player1 cart1
-face_object player1 strawberry0 cart1
-grab_food player1 strawberry0 swiss_cheese0
-face_cart player1 strawberry0 cart1
-drop_food_cart player1 strawberry0 cart1 strawberry0
-grab_cart player1 cart1
-navigate player1 strawberry0 swiss_cheese0
-release_cart player1 cart1
-face_object player1 swiss_cheese0 cart1
-grab_food player1 swiss_cheese0 steak0
-face_cart player1 swiss_cheese0 cart1
-drop_food_cart player1 swiss_cheese0 cart1 swiss_cheese0
-grab_cart player1 cart1
-navigate player1 swiss_cheese0 steak0
-release_cart player1 cart1
-face_object player1 steak0 cart1
-grab_food player1 steak0 steak01
-face_cart player1 steak0 cart1
-drop_food_cart player1 steak0 cart1 steak0
-grab_cart player1 cart1
-navigate player1 steak0 steak01
-release_cart player1 cart1
-face_object player1 steak01 cart1
-grab_food player1 steak01 ham0
-face_cart player1 steak01 cart1
-drop_food_cart player1 steak01 cart1 steak01
-grab_cart player1 cart1
-navigate player1 steak01 ham0
-release_cart player1 cart1
-face_object player1 ham0 cart1
-grab_food player1 ham0 onion0
-face_cart player1 ham0 cart1
-drop_food_cart player1 ham0 cart1 ham0
-grab_cart player1 cart1
-navigate player1 ham0 onion0
-release_cart player1 cart1
-face_object player1 onion0 cart1
-grab_food player1 onion0 garlic0
-face_cart player1 onion0 cart1
-drop_food_cart player1 onion0 cart1 onion0
-grab_cart player1 cart1
-navigate player1 onion0 garlic0
-release_cart player1 cart1
-face_object player1 garlic0 cart1
-grab_food player1 garlic0 red_bell_pepper0
-face_cart player1 garlic0 cart1
-drop_food_cart player1 garlic0 cart1 garlic0
-grab_cart player1 cart1
-navigate player1 garlic0 red_bell_pepper0
+navigate player1 avocado0 red_bell_pepper0
 release_cart player1 cart1
 face_object player1 red_bell_pepper0 cart1
-grab_food player1 red_bell_pepper0 apples0
+grab_food player1 red_bell_pepper0 red_bell_pepper01
 face_cart player1 red_bell_pepper0 cart1
 drop_food_cart player1 red_bell_pepper0 cart1 red_bell_pepper0
 grab_cart player1 cart1
-navigate player1 red_bell_pepper0 apples0
+navigate player1 red_bell_pepper0 red_bell_pepper01
 release_cart player1 cart1
-face_object player1 apples0 cart1
-grab_food player1 apples0 list
-face_cart player1 apples0 cart1
-drop_food_cart player1 apples0 cart1 apples0
+face_object player1 red_bell_pepper01 cart1
+grab_food player1 red_bell_pepper01 strawberry_milk0
+face_cart player1 red_bell_pepper01 cart1
+drop_food_cart player1 red_bell_pepper01 cart1 red_bell_pepper01
 grab_cart player1 cart1
-navigate player1 apples0 counter
+navigate player1 red_bell_pepper01 strawberry_milk0
+release_cart player1 cart1
+face_object player1 strawberry_milk0 cart1
+grab_food player1 strawberry_milk0 steak0
+face_cart player1 strawberry_milk0 cart1
+drop_food_cart player1 strawberry_milk0 cart1 strawberry_milk0
+grab_cart player1 cart1
+navigate player1 strawberry_milk0 steak0
+release_cart player1 cart1
+face_object player1 steak0 cart1
+grab_food player1 steak0 milk0
+face_cart player1 steak0 cart1
+drop_food_cart player1 steak0 cart1 steak0
+grab_cart player1 cart1
+navigate player1 steak0 milk0
+release_cart player1 cart1
+face_object player1 milk0 cart1
+grab_food player1 milk0 list
+face_cart player1 milk0 cart1
+drop_food_cart player1 milk0 cart1 milk0
+grab_cart player1 cart1
+navigate player1 milk0 counter
 release_cart player1 cart1
 face_object player1 counter cart1
 buy player1
 face_cart player1 counter cart1
 grab_cart player1 cart1
-navigate player1 counter list
+navigate player1 counter exit
 5
-shop player1 -> m0_init 12990 17 21
-do_get_cart player1 cart1 -> m2_do_get_cart 12993 12995
-shop player1 -> m0_shop 12997 67 75
-do_get_item player1 fresh_fish0 cart1 -> m3_do_get_item 13000 13003 13006 13010 13012 13015
-shop player1 -> m0_shop 13018 236 268
-do_get_item player1 fresh_fish01 cart1 -> m3_do_get_item 13021 13025 13028 13030 13033 13036
-shop player1 -> m0_shop 13039 913 944
-do_get_item player1 fresh_fish012 cart1 -> m3_do_get_item 13043 13058 13062 13065 13068 13071
-shop player1 -> m0_shop 13073 1933 1965
-do_get_item player1 strawberry0 cart1 -> m3_do_get_item 13079 13095 13099 13102 13105 13108
-shop player1 -> m0_shop 13111 2846 2880
-do_get_item player1 swiss_cheese0 cart1 -> m3_do_get_item 13117 13135 13137 13141 13143 13146
-shop player1 -> m0_shop 13149 3789 3823
-do_get_item player1 steak0 cart1 -> m3_do_get_item 13155 13171 13176 13178 13181 13184
-shop player1 -> m0_shop 13190 4769 4802
-do_get_item player1 steak01 cart1 -> m3_do_get_item 13193 13211 13214 13216 13219 13222
-shop player1 -> m0_shop 13226 5787 5820
-do_get_item player1 ham0 cart1 -> m3_do_get_item 13231 13249 13252 13255 13258 13260
-shop player1 -> m0_shop 13264 6843 6878
-do_get_item player1 onion0 cart1 -> m3_do_get_item 13269 13285 13290 13293 13296 13298
-shop player1 -> m0_shop 13304 7937 7970
-do_get_item player1 garlic0 cart1 -> m3_do_get_item 13307 13323 13327 13330 13334 13336
-shop player1 -> m0_shop 13340 9069 9102
-do_get_item player1 red_bell_pepper0 cart1 -> m3_do_get_item 13345 13363 13366 13368 13371 13374
-shop player1 -> m0_shop 13376 10240 10274
-do_get_item player1 apples0 cart1 -> m3_do_get_item 13383 13399 13403 13407 13410 13412
-shop player1 -> m0_exit 13415 12187 13463
-do_buy player1 -> m4_do_buy 13421 13426 13433 13438 13441
-do_navigate player1 entrance pickup_cart -> m1_do_navigate 12991
-do_navigate player1 pickup_cart fresh_fish0 -> m1_do_navigate 12998
-do_navigate player1 fresh_fish0 fresh_fish01 -> m1_do_navigate 13019
-do_navigate player1 fresh_fish01 fresh_fish012 -> m1_do_navigate 13040
-do_navigate player1 fresh_fish012 strawberry0 -> m1_do_navigate 13074
-do_navigate player1 strawberry0 swiss_cheese0 -> m1_do_navigate 13112
-do_navigate player1 swiss_cheese0 steak0 -> m1_do_navigate 13150
-do_navigate player1 steak0 steak01 -> m1_do_navigate 13191
-do_navigate player1 steak01 ham0 -> m1_do_navigate 13227
-do_navigate player1 ham0 onion0 -> m1_do_navigate 13265
-do_navigate player1 onion0 garlic0 -> m1_do_navigate 13305
-do_navigate player1 garlic0 red_bell_pepper0 -> m1_do_navigate 13341
-do_navigate player1 red_bell_pepper0 apples0 -> m1_do_navigate 13377
+shop player1 -> m0_init 2554 17 21
+do_get_cart player1 cart1 -> m2_do_get_cart 2557 2559
+shop player1 -> m0_shop 2560 60 69
+do_get_item player1 avocado0 cart1 -> m3_do_get_item 2564 2568 2570 2574 2577 2580
+shop player1 -> m0_shop 2581 183 223
+do_get_item player1 red_bell_pepper0 cart1 -> m3_do_get_item 2585 2588 2591 2595 2598 2601
+shop player1 -> m0_shop 2603 523 552
+do_get_item player1 red_bell_pepper01 cart1 -> m3_do_get_item 2607 2611 2615 2619 2623 2627
+shop player1 -> m0_shop 2629 986 1013
+do_get_item player1 strawberry_milk0 cart1 -> m3_do_get_item 2635 2641 2644 2648 2652 2656
+shop player1 -> m0_shop 2657 1435 1462
+do_get_item player1 steak0 cart1 -> m3_do_get_item 2665 2669 2673 2678 2683 2686
+shop player1 -> m0_shop 2688 1909 1937
+do_get_item player1 milk0 cart1 -> m3_do_get_item 2695 2701 2704 2708 2712 2716
+shop player1 -> m0_buy 2720 2415 2913
+do_buy player1 -> m4_do_buy 2725 2729 2739 2764 2827
+do_navigate player1 entrance pickup_cart -> m1_do_navigate 2555
+do_navigate player1 pickup_cart avocado0 -> m1_do_navigate 2561
+do_navigate player1 avocado0 red_bell_pepper0 -> m1_do_navigate 2582
+do_navigate player1 red_bell_pepper0 red_bell_pepper01 -> m1_do_navigate 2604
+do_navigate player1 red_bell_pepper01 strawberry_milk0 -> m1_do_navigate 2630
+do_navigate player1 strawberry_milk0 steak0 -> m1_do_navigate 2658
+do_navigate player1 steak0 milk0 -> m1_do_navigate 2689
+shop player1 -> m0_exit 2914

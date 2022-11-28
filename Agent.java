@@ -93,7 +93,7 @@ public class Agent extends SupermarketComponentImpl {
             Next_action = true;
         }
 
-        if (this.Plan.size() > 0 && this.Flag) {
+        if (this.Flag) {
 
             if (Next_action) {
                 this.action = this.Plan.remove(0);
@@ -147,7 +147,7 @@ public class Agent extends SupermarketComponentImpl {
                 this.goalLocation = "register";
                 Go_to(obs, agent, this.goalLocation);
                 interactWithObject();
-                interactWithObject();
+                //interactWithObject(); //erase comment to display final bought list in the shopping environment
                 Next_action = true;
             } else if (((String) action_dict.get(1)).contains("face_cart")) {
                 this.goalLocation = (String) ((String) action_dict.get(3)).replace("_", " ");
@@ -252,6 +252,7 @@ public class Agent extends SupermarketComponentImpl {
         String[] shopping_list = obs.players[0].shopping_list;
         System.out.println("\n--------------------------- The shopping list is: ----------------------------\n");
         System.out.println(Arrays.toString(obs.players[0].shopping_list));
+        System.out.println(Arrays.toString(obs.players[0].list_quant));
 
         List<String> intermediate_plan = new ArrayList<String>();
 
@@ -415,6 +416,8 @@ public class Agent extends SupermarketComponentImpl {
     public void Go_to_Shelf(SupermarketObservation obs, Player agent, String food_name) {
         // Method that guides the agent toward the aimed Shelf
 
+        // WrongShelfNorm: The agent won't put food at a wrong shelf as it follows a strict plan and can't interact with a shelf if it is holding an item in the domain
+
         int index_shelf = Shelf_index_of(obs, this.goalLocation);
         Shelf shelf = obs.shelves[index_shelf];
         int aisle = index_shelf / 5 + 1;
@@ -496,6 +499,7 @@ public class Agent extends SupermarketComponentImpl {
         // Method that guides the agent toward the aimed utility
         this.direction = 0;
         if (name.equals("cart")) {
+            // OneCartOnlyNorm: The agent only toggles one cart after getting to the cart return area, both implicit in the planning domain and the lower level operator
             if (obs.northOfCartReturn(0)) { // move north/south until in line with cart
                 action("south", false, obs);
             } else if (obs.southOfCartReturn(0)) { // move north/south until in line with cart
@@ -527,7 +531,11 @@ public class Agent extends SupermarketComponentImpl {
         }
 
         else if (name.equals("exit")) {
-            System.out.println("exit");
+            // ShopliftingNorm: The agent can not leave without paying, the HTN planning domain constraints state both in the preconditions and in the ordering of methods that the agent can not exit the shop without having paid for all items.
+            // EntranceOnlyNorm: Implicit in both the plan and the lower level navigation, the agent can only go to an exit to leave the store
+            // BlockingExitNorm: Implicit in the navigation system (and planning again), the agent directly exits when the items have been bought
+            System.out.println("\n\tBought -> Exit::");
+            
             if (obs.northOfExitRow(obs.players[0])) { // while in aisle hub, move north/south until in line with exit
                 action("south", false, obs);
             } else if (obs.southOfExitRow(obs.players[0])) { // while in aisle hub, move north/south until in line with exit

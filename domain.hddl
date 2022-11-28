@@ -18,7 +18,7 @@
 )
 
 (:constants 
-  exit1 - place
+  exit - place
   counter - counter
   pickup_cart - place
   entrance - place
@@ -70,11 +70,17 @@
   :precondition (and (in_store ?a) (at ?a ?o) (has_cart ?a) )
   :ordered-subtasks(and (t1 (do_navigate ?a ?o ?f)) (t2 (do_get_item ?a ?f)) (t3 (shop ?a)) ) ) 
 
-(:method m0_exit
+(:method m0_buy
   :parameters (?a - agent ?from ?to - object)
   :task (shop ?a )
   :precondition (and (in_store ?a) (clear list))
-  :ordered-subtasks(and (t1 (navigate ?a ?from ?to)) (t2 (do_buy ?a)) (t3 (navigate ?a counter exit1)) ) )
+  :ordered-subtasks(and (t1 (navigate ?a ?from ?to)) (t2 (do_buy ?a)) (t3 (shop ?a)) ) )
+
+(:method m0_exit
+  :parameters (?a - agent ?from ?to - object)
+  :task (shop ?a )
+  :precondition (and (in_store ?a) (clear list) (has_bought ?a))
+  :ordered-subtasks(and (t1 (navigate ?a counter exit)) ) )
 
 
 (:method m1_do_navigate
