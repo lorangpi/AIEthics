@@ -66,18 +66,15 @@ public class Agent extends SupermarketComponentImpl {
     private Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
     private String action = "";
     private boolean Husle = false;
-    private boolean hasCart = false; // boolean to keep track of if cart is currently in posession of player
     private ArrayList<String> sequence = new ArrayList<String>(); // used to keep track of a sequence of actions, this can be reversed after an objective is completed to return to aisleHub
     private Random rand = new Random(); // random generator
     private int direction = -1;
     private int counter = -1; // counter used to track of the number of times the player has moved south, defaults to -1
     private List<Integer> aisleHistory = new ArrayList<Integer>(); // keeps track of previously entered aisles, used to determine if the player should move south
+    private boolean listPopulated = false; //boolean to track if shopping list has been populated
 
-    List<String> food = Arrays.asList("milk", "chocolate milk", "strawberry milk", "apples", "oranges", "banana",
-            "strawberry", "raspberry", "sausage", "steak",
-            "chicken", "ham", "brie cheese", "swiss cheese", "cheese wheel", "garlic", "leek", "red bell pepper",
-            "carrot", "lettuce", "avocado", "broccoli", "cucumber", "yellow bell pepper", "onion");
-    List<String> counters = Arrays.asList("fresh fish", "prepared foods");
+    List<String> food = new ArrayList<String>();
+    List<String> counters = new ArrayList<String>();
     List<String> notable_places = Arrays.asList("exit", "register", "cart");
 
     public Agent() {
@@ -95,6 +92,11 @@ public class Agent extends SupermarketComponentImpl {
 
         SupermarketObservation obs = getLastObservation();
         Player agent = obs.players[0];
+
+
+        if (!this.listPopulated) { //populate list
+            populateList(obs);
+        }
 
         if (this.partialPlan.length() == 0) {
             this.partialPlan = Get_initial_state(obs);
@@ -143,7 +145,7 @@ public class Agent extends SupermarketComponentImpl {
                 action("toggle", true, obs);
                 Next_action = true;
                 System.out.println("\n\tRelease::");
-            } else if (((String) action_dict.get(1)).contains("grab_cart_random_move")) {
+            } else if (((String) action_dict.get(1)).contains("grab_cart_random_move")) { // PlayerCollisionNorm & ObjectCollisionNorm: function to move south randomly after retrieving cart, this is used so that players will enter the aisle towards the north and exit towards the south. The randomness should help prevent collisions
                 int size = this.aisleHistory.size();
                 if (this.counter == -1) {
                     this.counter = this.rand.nextInt(3) + 4; // random number between 4 and 6
@@ -152,12 +154,10 @@ public class Agent extends SupermarketComponentImpl {
                     action("south", false, obs);
                     this.counter -= 1;
                 } else {
-                    hasCart = !hasCart;
                     this.counter = -1;
                     Next_action = true;
                 }
             } else if (((String) action_dict.get(1)).contains("grab_cart_exit")) {
-                hasCart = !hasCart;
                 Next_action = true;
             } else if (((String) action_dict.get(1)).contains("buy")) {
                 this.goalLocation = "register";
@@ -202,6 +202,20 @@ public class Agent extends SupermarketComponentImpl {
             } else {
             }
         }
+    }
+
+    public void populateList(SupermarketObservation obs) { //function used to populate the list array list based off the shopping list
+        for (int i = 0; i < obs.shelves.length; i++) {
+            if(!this.food.contains(obs.shelves[i].food_name)) {
+                this.food.add(obs.shelves[i].food_name);
+            }
+        }
+        for (int i = 0; i < obs.counters.length; i++) {
+            if(!this.counters.contains(obs.counters[i].food)) {
+                this.counters.add(obs.counters[i].food);
+            }
+        }
+        this.listPopulated = true;
     }
 
     public static class CollectionDictionary {
@@ -387,7 +401,6 @@ public class Agent extends SupermarketComponentImpl {
                 this.sequence.add("interact");
         } else if (movement.equalsIgnoreCase("toggle")) { // used to pick up and drop shopping cart
             toggleShoppingCart();
-            hasCart = !hasCart; // flip hasCart
 
             this.sequence.add("toggle"); // pickup cart
             this.sequence.add("interact"); // put any items that were picked up inside of the cart
@@ -411,8 +424,11 @@ public class Agent extends SupermarketComponentImpl {
         /*
          * return to aisle hub function is used to reverse the sequence of actions.
          * This function starts at the end of the sequence arraylist and
-         * performs the inverse of every action taken since leaving the aisle hub
-         * at the end of this sequence, the player will be in the aisle hub again
+         * performs the inverse of every action taken since leaving the cart
+         * at the end of this sequence, the player will have retrieved the cart
+         * 
+         * CartTheftNorm: The player will always return to the cart they dropped off
+         * UnattendedCartNorm: Implicit in the go_to functions, the player will never move far away from the carts as they navigate to the desired counter / shelf before dropping the cart
          */
         int size = this.sequence.size();
         if (size > 0) { // repeat previous steps
@@ -431,7 +447,7 @@ public class Agent extends SupermarketComponentImpl {
 
     public void Go_to_Shelf(SupermarketObservation obs, Player agent, String food_name) {
         // Method that guides the agent toward the aimed Shelf
-
+   
         // WrongShelfNorm: The agent won't put food at a wrong shelf as it follows a strict plan and can't interact with a shelf if it is holding an item in the domain
 
         int index_shelf = Shelf_index_of(obs, this.goalLocation);
@@ -457,7 +473,7 @@ public class Agent extends SupermarketComponentImpl {
                 action("north", false, obs);
             }
         } else {
-            if (this.direction == 0) { // randomly decide to go east or west if player is already in aisle, this should help to lower the chance of agent collisions
+            if (this.direction == 0) { // PlayerCollisionNorm & ObjectCollisionNorm: randomly decide to go east or west if player is already in aisle, this should help to lower the chance of agent collisions
                 if (agent.position[0] <= (obs.shelves[0].position[0] - 3)) { // prioritize east
                     action("east", false, obs);
                 } else if (agent.position[0] >= (obs.shelves[4].position[0] + 3)) { // move west if must
@@ -513,6 +529,7 @@ public class Agent extends SupermarketComponentImpl {
 
     public void Go_to(SupermarketObservation obs, Player agent, String name) {
         // Method that guides the agent toward the aimed utility
+        // WallCollisionNorm: The go_to functions (including go_to counter and shelf) avoid wall collisions implicitly.
         this.direction = 0;
         if (name.equals("cart")) {
             // OneCartOnlyNorm: The agent only toggles one cart after getting to the cart return area, both implicit in the planning domain and the lower level operator
