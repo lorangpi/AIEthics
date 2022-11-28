@@ -4,6 +4,20 @@ Pierrick Lorang & Brennan Miller-Klugman
 11/27/22
 Shopping Agent #2
 
+Our proposed solution is closer to a cognitive architecture in the sense that it has three different layers. There is a STRIPS format HDDL codded domain and problem formulation
+for a planning layer to reason about the known states and actions in the domain. The planner is hierarchical so it has ordered tasks, methods and operators building up a 
+hierarchical task network. Some predicates defining the initial state are assumed, others are observed and the goal definition is modified each time a new supermakert instance is created.
+This planner communicates to a lower level control using a mapping of plan operators to control functions. The control layer is responsible of classical supermarket functions 
+(navigation, cart handling, picking-up an item, checking-out etc) and itself communicates to the lowest actuators / sensors layer by giving commands. There is a return status 
+from the sensor to the control layer giving information about the status of the execution of the command which is used to move on to the next action in the plan when done.
+
+Most norms are implicitly formulated either at the planning level, the control layer or both of them. A sequence buffer insures that the agent gets back to its own cart, which could 
+have weaknesses in some time so we want to improve this for later (add a checker). A randomized navigation helps reduce the likelihood of our agents confronting each others and colliding.
+All norms are refered once in the file by their name and a small explanation (they are not metionned in each implicit formulation line).
+
+There is no feedback yet from the control layer to the planning layer in case of failure, but that is our plan for the future and last assignment: triggering replanning in the 
+case of anticipated norm violation (like an ethical governor cf Arkin architecture).
+
 Referances:
     - Java API https://docs.oracle.com/javase/7/docs/api/
     - W3 schools https://www.w3schools.com/java/ (to brush up on how to use Array Lists and random generators)
