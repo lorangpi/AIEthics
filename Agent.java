@@ -40,10 +40,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -51,6 +53,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.Random;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import com.supermarket.*;
 import com.supermarket.SupermarketObservation.Player;
@@ -77,6 +82,9 @@ public class Agent extends SupermarketComponentImpl {
     private List<Integer> aisleHistory = new ArrayList<Integer>(); // keeps track of previously entered aisles, used to determine if the player should move south
     private boolean listPopulated = false; //boolean to track if shopping list has been populated
     private Player agent;
+    private String plan_name;
+    private String init_name;
+    private Boolean RePlan = false;
 
     List<String> food = new ArrayList<String>();
     List<String> counters = new ArrayList<String>();
@@ -96,6 +104,8 @@ public class Agent extends SupermarketComponentImpl {
 
         SupermarketObservation obs = getLastObservation();
         this.agent = obs.players[this.playerIndex];
+        this.plan_name = "Plan"+String.valueOf(this.playerIndex)+".txt";
+        this.init_name = "shopping"+String.valueOf(this.playerIndex)+".hddl";
 
         if (!this.listPopulated) { //populate list
             populateList(obs);
@@ -139,6 +149,19 @@ public class Agent extends SupermarketComponentImpl {
 
                 if (this.food.contains(this.goalLocation)) {
                     Go_to_Shelf(obs, this.goalLocation);
+                    if (RePlan && this.Plan.size() >= 20){
+                        if (this.action.contains("navigate")){
+                            this.Plan.add(0, this.action);
+                            //System.out.println(this.Plan);
+                            Collections.swap(this.Plan, 0, 7);
+                            Collections.swap(this.Plan, 1, 8);
+                            Collections.swap(this.Plan, 2, 9);
+                            Collections.swap(this.Plan, 3, 10);
+                            Collections.swap(this.Plan, 4, 11);
+                            Collections.swap(this.Plan, 5, 12);
+                            Collections.swap(this.Plan, 6, 13);
+                        }
+                    }
                 } else if (this.counters.contains(this.goalLocation)) {
                     Go_to_Counter(obs, this.goalLocation);
                 } else if (this.notable_places.contains(this.goalLocation)) {
@@ -238,14 +261,19 @@ public class Agent extends SupermarketComponentImpl {
 
     public String Get_initial_state(com.supermarket.SupermarketObservation obs) {
         // Method that returns the partial plan from the observation in a HDDL file
-        String[] shopping_list = obs.players[0].shopping_list;
-        int[] shopping_quant = obs.players[0].list_quant;
+        String[] shopping_list = obs.players[this.playerIndex].shopping_list;
+        int[] shopping_quant = obs.players[this.playerIndex].list_quant;
         String object;
         String objects = "";
         String init_state = "";
         String buffer = "";
 
         int list_counter = 0;
+
+        try {
+            Files.copy(new File("shopping.hddl").toPath(), new File(this.init_name).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+        }
 
         // for loop
         for (String iterator : shopping_list) {
@@ -266,10 +294,10 @@ public class Agent extends SupermarketComponentImpl {
         init_state += "(on " + buffer + " list) ";
         System.out.println(init_state);
         // Instantiating the File class
-        String filePath = "shopping.hddl";
+        String filePath = this.init_name;
         // Instantiating the Scanner class to read the file
         try {
-            Path path = Paths.get("shopping.hddl");
+            Path path = Paths.get(init_name);
             List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
             lines.set(7, objects);
             lines.set(19, init_state);
@@ -282,18 +310,18 @@ public class Agent extends SupermarketComponentImpl {
     public void Get_plan(com.supermarket.SupermarketObservation obs) {
         // Method that creates the plan from the partial plan (using Lifted Logic for Task Networks: SAT-driven Totally-ordered Hierarchical Task Network (HTN) Planning)
 
-        String[] shopping_list = obs.players[0].shopping_list;
+        String[] shopping_list = obs.players[this.playerIndex].shopping_list;
         System.out.println("\n--------------------------- The shopping list is: ----------------------------\n");
-        System.out.println(Arrays.toString(obs.players[0].shopping_list));
-        System.out.println(Arrays.toString(obs.players[0].list_quant));
+        System.out.println(Arrays.toString(obs.players[this.playerIndex].shopping_list));
+        System.out.println(Arrays.toString(obs.players[this.playerIndex].list_quant));
 
         List<String> intermediate_plan = new ArrayList<String>();
 
         try {
             String[] args = new String[] { "/bin/bash", "-c",
-                    "./lilotane domain.hddl shopping.hddl -v=0 | cut -d' ' -f2- | sed 1,2d | head -n -2 > Plan.txt" };
+                    "./lilotane domain.hddl " +this.init_name+ " -v=0 | cut -d' ' -f2- | sed 1,2d | head -n -2 > "+this.plan_name };
             Process proc = new ProcessBuilder(args).start();
-            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException ex) {
@@ -316,7 +344,7 @@ public class Agent extends SupermarketComponentImpl {
 
         try {
 
-            File f = new File("Plan.txt");
+            File f = new File(this.plan_name);
 
             BufferedReader b = new BufferedReader(new FileReader(f));
 
@@ -419,7 +447,7 @@ public class Agent extends SupermarketComponentImpl {
                 this.sequence.add("toggle"); // pickup cart
                 this.sequence.add("interact"); // put any items that were picked up inside of the cart
 
-                int dir = obs.players[0].direction; // get direction of cart and append to sequence
+                int dir = obs.players[this.playerIndex].direction; // get direction of cart and append to sequence
                 if (dir == 0)
                     this.sequence.add("north");
                 else if (dir == 1)
@@ -529,7 +557,7 @@ public class Agent extends SupermarketComponentImpl {
         } else if (obs.westOf(this.agent, counter) && !obs.inRearAisleHub(this.agent.index) && !obs.inAisleHub(this.agent.index)) { // move east until in aisle hub or rear aisle hub if confused
             action("east", false, obs);
         } else if (obs.eastOf(this.agent, counter) && !obs.inRearAisleHub(this.agent.index)
-                && !counter.canInteract(obs.players[0])) { // move east / west to rearAisle hub
+                && !counter.canInteract(obs.players[this.playerIndex])) { // move east / west to rearAisle hub
             action("west", false, obs);
         } else if (obs.westOf(this.agent, counter) && !obs.inRearAisleHub(this.agent.index)
                 && !counter.canInteract(this.agent)) { // move east / west to rearAisle hub
@@ -616,7 +644,7 @@ public class Agent extends SupermarketComponentImpl {
         Shelf shelf = obs.shelves[index_shelf];
         if (obs.northOf(this.agent, shelf) && !shelf.canInteract(this.agent)) { // walk up to shelf
             action("south", true, obs);
-        } else if (obs.southOf(obs.players[0], shelf) && !shelf.canInteract(this.agent)) { // walk up to shelf
+        } else if (obs.southOf(obs.players[this.playerIndex], shelf) && !shelf.canInteract(this.agent)) { // walk up to shelf
             action("north", true, obs);
         } else {
             Next_action = true;
@@ -641,7 +669,7 @@ public class Agent extends SupermarketComponentImpl {
             Register register = obs.registers[0];
             boolean Interaction = register.canInteract(this.agent);
 
-            if (obs.southOf(this.agent, obs.registers[0]) && !obs.registers[0].canInteract(obs.players[0])) { // move north to register
+            if (obs.southOf(this.agent, obs.registers[0]) && !obs.registers[0].canInteract(obs.players[this.playerIndex])) { // move north to register
                 action("north", false, obs);
             } else {
                 Next_action = true;

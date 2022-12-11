@@ -1,0 +1,25 @@
+(define 
+    (problem shopping)
+    (:domain supermarket)
+
+    (:objects
+        player1 - agent
+        cart1 - cart
+swiss_cheese0 ham0 ham01 cheese_wheel0 leek0 onion0 brie_cheese0 avocado0 steak0 steak01 chicken0 - food
+    )
+    (:htn
+:tasks (shop player1)
+
+    )
+    (:init
+        (at player1 entrance)
+        (in_store player1)
+        (facing void)
+        (free_hands player1)
+        
+(clear swiss_cheese0) (on swiss_cheese0 ham0) (on ham0 ham01) (on ham01 cheese_wheel0) (on cheese_wheel0 leek0) (on leek0 onion0) (on onion0 brie_cheese0) (on brie_cheese0 avocado0) (on avocado0 steak0) (on steak0 steak01) (on steak01 chicken0) (on chicken0 list) 
+        
+        (clear cart)
+        
+    )
+)
