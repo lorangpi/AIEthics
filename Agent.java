@@ -93,10 +93,9 @@ public class Agent extends SupermarketComponentImpl {
         // this is called every 100ms
         // put your code in here, e.g.
 
-        this.rand.setSeed(System.nanoTime()); // randomize seed for random number generator
 
         SupermarketObservation obs = getLastObservation();
-        this.agent = obs.players[0];
+        this.agent = obs.players[this.playerIndex];
 
         if (!this.listPopulated) { //populate list
             populateList(obs);
@@ -523,21 +522,21 @@ public class Agent extends SupermarketComponentImpl {
         Counter counter = obs.counters[Counter_index_of(obs, this.goalLocation)];
         boolean Interaction = counter.canInteract(this.agent);
 
-        if (obs.northOfAisle(0, 1) && obs.inAisleHub(0) && !obs.inRearAisleHub(0)) { // navigate north / west to be in line with a randomly selected aisle (used to traverse to back of store)
+        if (obs.northOfAisle(this.agent.index, 1) && obs.inAisleHub(this.agent.index) && !obs.inRearAisleHub(this.agent.index)) { // navigate north / west to be in line with a randomly selected aisle (used to traverse to back of store)
             action("south", false, obs);
-        } else if (obs.southOfAisle(0, 1) && obs.inAisleHub(0) && !obs.inRearAisleHub(0)) { // navigate north / west to be in line with a randomly selected aisle (used to traverse to back of store)
+        } else if (obs.southOfAisle(this.agent.index, 1) && obs.inAisleHub(this.agent.index) && !obs.inRearAisleHub(this.agent.index)) { // navigate north / west to be in line with a randomly selected aisle (used to traverse to back of store)
             action("north", false, obs);
-        } else if (obs.westOf(obs.players[0], counter) && !obs.inRearAisleHub(0) && !obs.inAisleHub(0)) { // move east until in aisle hub or rear aisle hub if confused
+        } else if (obs.westOf(this.agent, counter) && !obs.inRearAisleHub(this.agent.index) && !obs.inAisleHub(this.agent.index)) { // move east until in aisle hub or rear aisle hub if confused
             action("east", false, obs);
-        } else if (obs.eastOf(obs.players[0], counter) && !obs.inRearAisleHub(0)
+        } else if (obs.eastOf(this.agent, counter) && !obs.inRearAisleHub(this.agent.index)
                 && !counter.canInteract(obs.players[0])) { // move east / west to rearAisle hub
             action("west", false, obs);
-        } else if (obs.westOf(obs.players[0], counter) && !obs.inRearAisleHub(0)
-                && !counter.canInteract(obs.players[0])) { // move east / west to rearAisle hub
+        } else if (obs.westOf(this.agent, counter) && !obs.inRearAisleHub(this.agent.index)
+                && !counter.canInteract(this.agent)) { // move east / west to rearAisle hub
             action("east", false, obs);
-        } else if (obs.northOf(obs.players[0], counter)) { // move north/south in rear aisle hub until inline with counter
+        } else if (obs.northOf(this.agent, counter)) { // move north/south in rear aisle hub until inline with counter
             action("south", true, obs);
-        } else if (obs.southOf(obs.players[0], counter)) { // move north/south in rear aisle hub until inline with counter
+        } else if (obs.southOf(this.agent, counter)) { // move north/south in rear aisle hub until inline with counter
             action("north", true, obs);
         } else {
             action("north", true, obs);
@@ -549,32 +548,43 @@ public class Agent extends SupermarketComponentImpl {
         // Method that guides the agent toward the aimed utility
         // WallCollisionNorm: The go_to functions (including go_to counter and shelf) avoid wall collisions implicitly.
         this.direction = 0;
+
         if (name.equals("cart")) {
             // OneCartOnlyNorm: The agent only toggles one cart after getting to the cart return area, both implicit in the planning domain and the lower level operator
-            if (obs.northOfCartReturn(0)) { // move north/south until in line with cart
+            if (this.counter == -1){
+                this.counter = this.rand.nextInt(10); //randomly generate a number between 0 and 20
+            }else if(this.counter > 0) {
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    System.out.println("Error");
+                }
+                this.counter--;
+            } else if (obs.northOfCartReturn(this.agent.index)) { // move north/south until in line with cart
                 action("south", false, obs);
-            } else if (obs.southOfCartReturn(0)) { // move north/south until in line with cart
+            } else if (obs.southOfCartReturn(this.agent.index)) { // move north/south until in line with cart
                 action("north", false, obs);
-            } else if (obs.eastOf(obs.players[0], obs.cartReturns[0])) { // move west to cart return
+            } else if (obs.eastOf(this.agent, obs.cartReturns[0])) { // move west to cart return
                 action("west", false, obs);
-            } else if (obs.northOf(obs.players[0], obs.cartReturns[0])
-                    && !obs.cartReturns[0].canInteract(obs.players[0])) { // move south until can interact with cart
+            } else if (obs.northOf(this.agent, obs.cartReturns[0])
+                    && !obs.cartReturns[0].canInteract(this.agent)) { // move south until can interact with cart
                 action("south", false, obs);
             } else {
+                this.counter = -1;
                 Next_action = true;
             }
         } else if (name.equals("register")) {
-            if (obs.northOfAisle(0, 1) && obs.inRearAisleHub(0) && !obs.inAisleHub(0)) { // navigate north / west to be in line with a randomly selected aisle (used to traverse to back of store)
+            if (obs.northOfAisle(this.agent.index, 1) && obs.inRearAisleHub(this.agent.index) && !obs.inAisleHub(this.agent.index)) { // navigate north / west to be in line with a randomly selected aisle (used to traverse to back of store)
                 action("south", false, obs);
-            } else if (obs.southOfAisle(0, 1) && obs.inRearAisleHub(0) && !obs.inAisleHub(0)) { // navigate north / west to be in line with a randomly selected aisle (used to traverse to back of store)
+            } else if (obs.southOfAisle(this.agent.index, 1) && obs.inRearAisleHub(this.agent.index) && !obs.inAisleHub(this.agent.index)) { // navigate north / west to be in line with a randomly selected aisle (used to traverse to back of store)
                 action("north", false, obs);
-            } else if (obs.northOfExitRow(obs.players[0]) && obs.inAisleHub(0)) { // while in aisle hub, move north/south until in line with exit (and register)
+            } else if (obs.northOfExitRow(this.agent) && obs.inAisleHub(this.agent.index)) { // while in aisle hub, move north/south until in line with exit (and register)
                 action("south", false, obs);
-            } else if (obs.southOfExitRow(obs.players[0]) && obs.inAisleHub(0)) { // while in aisle hub, move north/south until in line with exit (and register)
+            } else if (obs.southOfExitRow(this.agent) && obs.inAisleHub(this.agent.index)) { // while in aisle hub, move north/south until in line with exit (and register)
                 action("north", false, obs);
-            } else if (obs.eastOf(obs.players[0], obs.registers[0])) { // go east / west to face checkout
+            } else if (obs.eastOf(this.agent, obs.registers[0])) { // go east / west to face checkout
                 action("west", false, obs);
-            } else if (obs.westOf(obs.players[0], obs.registers[0])) { // move east and drop cart
+            } else if (obs.westOf(this.agent, obs.registers[0])) { // move east and drop cart
                 action("east", true, obs);
             } else {
                 Next_action = true;
@@ -587,11 +597,11 @@ public class Agent extends SupermarketComponentImpl {
             // BlockingExitNorm: Implicit in the navigation system (and planning again), the agent directly exits when the items have been bought
             System.out.println("\n\tBought -> Exit::");
 
-            if (obs.northOfExitRow(obs.players[0])) { // while in aisle hub, move north/south until in line with exit
+            if (obs.northOfExitRow(this.agent)) { // while in aisle hub, move north/south until in line with exit
                 action("south", false, obs);
-            } else if (obs.southOfExitRow(obs.players[0])) { // while in aisle hub, move north/south until in line with exit
+            } else if (obs.southOfExitRow(this.agent)) { // while in aisle hub, move north/south until in line with exit
                 action("north", false, obs);
-            } else if (obs.inStore(obs.players[0])) { // move west through exit
+            } else if (obs.inStore(this.agent)) { // move west through exit
                 action("west", false, obs);
             } else {
                 Next_action = true;
@@ -604,9 +614,9 @@ public class Agent extends SupermarketComponentImpl {
         // Method that guides the agent toward the aimed Shelf
         int index_shelf = Shelf_index_of(obs, this.goalLocation);
         Shelf shelf = obs.shelves[index_shelf];
-        if (obs.northOf(obs.players[0], shelf) && !shelf.canInteract(obs.players[0])) { // walk up to shelf
+        if (obs.northOf(this.agent, shelf) && !shelf.canInteract(this.agent)) { // walk up to shelf
             action("south", true, obs);
-        } else if (obs.southOf(obs.players[0], shelf) && !shelf.canInteract(obs.players[0])) { // walk up to shelf
+        } else if (obs.southOf(obs.players[0], shelf) && !shelf.canInteract(this.agent)) { // walk up to shelf
             action("north", true, obs);
         } else {
             Next_action = true;
@@ -616,9 +626,9 @@ public class Agent extends SupermarketComponentImpl {
     public void Face_Counter(SupermarketObservation obs,  String name) {
         // Method that guides the agent toward the aimed Counter
         Counter counter = obs.counters[Counter_index_of(obs, this.goalLocation)];
-        if (obs.westOf(obs.players[0], counter) && !counter.canInteract(obs.players[0])) { // move east to counter
+        if (obs.westOf(this.agent, counter) && !counter.canInteract(this.agent)) { // move east to counter
             action("east", true, obs);
-        } else if (obs.eastOf(obs.players[0], counter) && !counter.canInteract(obs.players[0])) { // move west to counter
+        } else if (obs.eastOf(this.agent, counter) && !counter.canInteract(this.agent)) { // move west to counter
             action("west", true, obs);
         } else {
             Next_action = true;
@@ -631,7 +641,7 @@ public class Agent extends SupermarketComponentImpl {
             Register register = obs.registers[0];
             boolean Interaction = register.canInteract(this.agent);
 
-            if (obs.southOf(obs.players[0], obs.registers[0]) && !obs.registers[0].canInteract(obs.players[0])) { // move north to register
+            if (obs.southOf(this.agent, obs.registers[0]) && !obs.registers[0].canInteract(obs.players[0])) { // move north to register
                 action("north", false, obs);
             } else {
                 Next_action = true;
