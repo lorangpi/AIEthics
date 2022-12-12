@@ -1,70 +1,70 @@
 navigate player1 entrance pickup_cart
 face_object player1 pickup_cart void
 get_cart player1 cart1
-navigate player1 pickup_cart strawberry_milk0
+navigate player1 pickup_cart fresh_fish0
 release_cart player1 cart1
-face_object player1 strawberry_milk0 cart1
-grab_food player1 strawberry_milk0 apples0
-face_cart player1 strawberry_milk0 cart1
-drop_food_cart player1 strawberry_milk0 cart1 strawberry_milk0
+face_object player1 fresh_fish0 cart1
+grab_food player1 fresh_fish0 fresh_fish01
+face_cart player1 fresh_fish0 cart1
+drop_food_cart player1 fresh_fish0 cart1 fresh_fish0
 grab_cart_random_move player1 cart1
-navigate player1 strawberry_milk0 apples0
+navigate player1 fresh_fish0 fresh_fish01
 release_cart player1 cart1
-face_object player1 apples0 cart1
-grab_food player1 apples0 chicken0
-face_cart player1 apples0 cart1
-drop_food_cart player1 apples0 cart1 apples0
+face_object player1 fresh_fish01 cart1
+grab_food player1 fresh_fish01 prepared_foods0
+face_cart player1 fresh_fish01 cart1
+drop_food_cart player1 fresh_fish01 cart1 fresh_fish01
 grab_cart_random_move player1 cart1
-navigate player1 apples0 chicken0
+navigate player1 fresh_fish01 prepared_foods0
 release_cart player1 cart1
-face_object player1 chicken0 cart1
-grab_food player1 chicken0 carrot0
-face_cart player1 chicken0 cart1
-drop_food_cart player1 chicken0 cart1 chicken0
+face_object player1 prepared_foods0 cart1
+grab_food player1 prepared_foods0 carrot0
+face_cart player1 prepared_foods0 cart1
+drop_food_cart player1 prepared_foods0 cart1 prepared_foods0
 grab_cart_random_move player1 cart1
-navigate player1 chicken0 carrot0
+navigate player1 prepared_foods0 carrot0
 release_cart player1 cart1
 face_object player1 carrot0 cart1
-grab_food player1 carrot0 onion0
+grab_food player1 carrot0 cheese_wheel0
 face_cart player1 carrot0 cart1
 drop_food_cart player1 carrot0 cart1 carrot0
 grab_cart_random_move player1 cart1
-navigate player1 carrot0 onion0
-release_cart player1 cart1
-face_object player1 onion0 cart1
-grab_food player1 onion0 swiss_cheese0
-face_cart player1 onion0 cart1
-drop_food_cart player1 onion0 cart1 onion0
-grab_cart_random_move player1 cart1
-navigate player1 onion0 swiss_cheese0
-release_cart player1 cart1
-face_object player1 swiss_cheese0 cart1
-grab_food player1 swiss_cheese0 cheese_wheel0
-face_cart player1 swiss_cheese0 cart1
-drop_food_cart player1 swiss_cheese0 cart1 swiss_cheese0
-grab_cart_random_move player1 cart1
-navigate player1 swiss_cheese0 cheese_wheel0
+navigate player1 carrot0 cheese_wheel0
 release_cart player1 cart1
 face_object player1 cheese_wheel0 cart1
-grab_food player1 cheese_wheel0 oranges0
+grab_food player1 cheese_wheel0 chocolate_milk0
 face_cart player1 cheese_wheel0 cart1
 drop_food_cart player1 cheese_wheel0 cart1 cheese_wheel0
 grab_cart_random_move player1 cart1
-navigate player1 cheese_wheel0 oranges0
+navigate player1 cheese_wheel0 chocolate_milk0
 release_cart player1 cart1
-face_object player1 oranges0 cart1
-grab_food player1 oranges0 lettuce0
-face_cart player1 oranges0 cart1
-drop_food_cart player1 oranges0 cart1 oranges0
+face_object player1 chocolate_milk0 cart1
+grab_food player1 chocolate_milk0 steak0
+face_cart player1 chocolate_milk0 cart1
+drop_food_cart player1 chocolate_milk0 cart1 chocolate_milk0
 grab_cart_random_move player1 cart1
-navigate player1 oranges0 lettuce0
+navigate player1 chocolate_milk0 steak0
 release_cart player1 cart1
-face_object player1 lettuce0 cart1
-grab_food player1 lettuce0 list
-face_cart player1 lettuce0 cart1
-drop_food_cart player1 lettuce0 cart1 lettuce0
+face_object player1 steak0 cart1
+grab_food player1 steak0 strawberry0
+face_cart player1 steak0 cart1
+drop_food_cart player1 steak0 cart1 steak0
 grab_cart_random_move player1 cart1
-navigate player1 lettuce0 counter
+navigate player1 steak0 strawberry0
+release_cart player1 cart1
+face_object player1 strawberry0 cart1
+grab_food player1 strawberry0 cucumber0
+face_cart player1 strawberry0 cart1
+drop_food_cart player1 strawberry0 cart1 strawberry0
+grab_cart_random_move player1 cart1
+navigate player1 strawberry0 cucumber0
+release_cart player1 cart1
+face_object player1 cucumber0 cart1
+grab_food player1 cucumber0 list
+face_cart player1 cucumber0 cart1
+drop_food_cart player1 cucumber0 cart1 cucumber0
+grab_cart_random_move player1 cart1
+navigate player1 cucumber0 counter
 release_cart player1 cart1
 face_object player1 counter cart1
 buy player1
@@ -75,33 +75,33 @@ navigate player1 counter exit
 shop player1 -> m0_init 5896 17 22
 do_get_cart player1 cart1 -> m2_do_get_cart 5899 5901
 shop player1 -> m0_shop 5902 63 71
-do_get_item player1 strawberry_milk0 cart1 -> m3_do_get_item 5907 5910 5913 5916 5918 5922
+do_get_item player1 fresh_fish0 cart1 -> m3_do_get_item 5907 5909 5913 5915 5919 5922
 shop player1 -> m0_shop 5923 198 244
-do_get_item player1 apples0 cart1 -> m3_do_get_item 5928 5930 5934 5937 5940 5943
+do_get_item player1 fresh_fish01 cart1 -> m3_do_get_item 5928 5930 5934 5937 5940 5943
 shop player1 -> m0_shop 5944 683 714
-do_get_item player1 chicken0 cart1 -> m3_do_get_item 5950 5952 5958 5961 5966 5969
+do_get_item player1 prepared_foods0 cart1 -> m3_do_get_item 5950 5952 5958 5961 5966 5969
 shop player1 -> m0_shop 5971 1389 1421
 do_get_item player1 carrot0 cart1 -> m3_do_get_item 5978 5983 5987 5990 5993 5998
 shop player1 -> m0_shop 6001 2037 2068
-do_get_item player1 onion0 cart1 -> m3_do_get_item 6008 6010 6016 6020 6024 6028
+do_get_item player1 cheese_wheel0 cart1 -> m3_do_get_item 6008 6010 6016 6020 6024 6028
 shop player1 -> m0_shop 6029 2707 2739
-do_get_item player1 swiss_cheese0 cart1 -> m3_do_get_item 6038 6043 6045 6049 6053 6058
+do_get_item player1 chocolate_milk0 cart1 -> m3_do_get_item 6038 6043 6045 6049 6053 6058
 shop player1 -> m0_shop 6060 3407 3439
-do_get_item player1 cheese_wheel0 cart1 -> m3_do_get_item 6068 6072 6077 6079 6083 6088
+do_get_item player1 steak0 cart1 -> m3_do_get_item 6068 6072 6077 6079 6083 6088
 shop player1 -> m0_shop 6092 4137 4170
-do_get_item player1 oranges0 cart1 -> m3_do_get_item 6098 6103 6107 6110 6113 6118
+do_get_item player1 strawberry0 cart1 -> m3_do_get_item 6098 6103 6107 6110 6113 6118
 shop player1 -> m0_shop 6123 4897 4930
-do_get_item player1 lettuce0 cart1 -> m3_do_get_item 6128 6133 6137 6140 6143 6148
+do_get_item player1 cucumber0 cart1 -> m3_do_get_item 6128 6133 6137 6140 6143 6148
 shop player1 -> m0_buy 6153 5689 6466
 do_buy player1 -> m4_do_buy 6158 6162 6171 6201 6319
 do_navigate player1 entrance pickup_cart -> m1_do_navigate 5897
-do_navigate player1 pickup_cart strawberry_milk0 -> m1_do_navigate 5903
-do_navigate player1 strawberry_milk0 apples0 -> m1_do_navigate 5924
-do_navigate player1 apples0 chicken0 -> m1_do_navigate 5945
-do_navigate player1 chicken0 carrot0 -> m1_do_navigate 5972
-do_navigate player1 carrot0 onion0 -> m1_do_navigate 6002
-do_navigate player1 onion0 swiss_cheese0 -> m1_do_navigate 6030
-do_navigate player1 swiss_cheese0 cheese_wheel0 -> m1_do_navigate 6061
-do_navigate player1 cheese_wheel0 oranges0 -> m1_do_navigate 6093
-do_navigate player1 oranges0 lettuce0 -> m1_do_navigate 6124
+do_navigate player1 pickup_cart fresh_fish0 -> m1_do_navigate 5903
+do_navigate player1 fresh_fish0 fresh_fish01 -> m1_do_navigate 5924
+do_navigate player1 fresh_fish01 prepared_foods0 -> m1_do_navigate 5945
+do_navigate player1 prepared_foods0 carrot0 -> m1_do_navigate 5972
+do_navigate player1 carrot0 cheese_wheel0 -> m1_do_navigate 6002
+do_navigate player1 cheese_wheel0 chocolate_milk0 -> m1_do_navigate 6030
+do_navigate player1 chocolate_milk0 steak0 -> m1_do_navigate 6061
+do_navigate player1 steak0 strawberry0 -> m1_do_navigate 6093
+do_navigate player1 strawberry0 cucumber0 -> m1_do_navigate 6124
 shop player1 -> m0_exit 6467

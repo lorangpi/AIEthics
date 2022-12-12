@@ -1,21 +1,63 @@
 navigate player1 entrance pickup_cart
 face_object player1 pickup_cart void
 get_cart player1 cart1
-navigate player1 pickup_cart cheese_wheel0
+navigate player1 pickup_cart oranges0
+release_cart player1 cart1
+face_object player1 oranges0 cart1
+grab_food player1 oranges0 ham0
+face_cart player1 oranges0 cart1
+drop_food_cart player1 oranges0 cart1 oranges0
+grab_cart_random_move player1 cart1
+navigate player1 oranges0 ham0
+release_cart player1 cart1
+face_object player1 ham0 cart1
+grab_food player1 ham0 sausage0
+face_cart player1 ham0 cart1
+drop_food_cart player1 ham0 cart1 ham0
+grab_cart_random_move player1 cart1
+navigate player1 ham0 sausage0
+release_cart player1 cart1
+face_object player1 sausage0 cart1
+grab_food player1 sausage0 lettuce0
+face_cart player1 sausage0 cart1
+drop_food_cart player1 sausage0 cart1 sausage0
+grab_cart_random_move player1 cart1
+navigate player1 sausage0 lettuce0
+release_cart player1 cart1
+face_object player1 lettuce0 cart1
+grab_food player1 lettuce0 cheese_wheel0
+face_cart player1 lettuce0 cart1
+drop_food_cart player1 lettuce0 cart1 lettuce0
+grab_cart_random_move player1 cart1
+navigate player1 lettuce0 cheese_wheel0
 release_cart player1 cart1
 face_object player1 cheese_wheel0 cart1
-grab_food player1 cheese_wheel0 fresh_fish0
+grab_food player1 cheese_wheel0 yellow_bell_pepper0
 face_cart player1 cheese_wheel0 cart1
 drop_food_cart player1 cheese_wheel0 cart1 cheese_wheel0
 grab_cart_random_move player1 cart1
-navigate player1 cheese_wheel0 fresh_fish0
+navigate player1 cheese_wheel0 yellow_bell_pepper0
 release_cart player1 cart1
-face_object player1 fresh_fish0 cart1
-grab_food player1 fresh_fish0 list
-face_cart player1 fresh_fish0 cart1
-drop_food_cart player1 fresh_fish0 cart1 fresh_fish0
+face_object player1 yellow_bell_pepper0 cart1
+grab_food player1 yellow_bell_pepper0 raspberry0
+face_cart player1 yellow_bell_pepper0 cart1
+drop_food_cart player1 yellow_bell_pepper0 cart1 yellow_bell_pepper0
 grab_cart_random_move player1 cart1
-navigate player1 fresh_fish0 counter
+navigate player1 yellow_bell_pepper0 raspberry0
+release_cart player1 cart1
+face_object player1 raspberry0 cart1
+grab_food player1 raspberry0 banana0
+face_cart player1 raspberry0 cart1
+drop_food_cart player1 raspberry0 cart1 raspberry0
+grab_cart_random_move player1 cart1
+navigate player1 raspberry0 banana0
+release_cart player1 cart1
+face_object player1 banana0 cart1
+grab_food player1 banana0 list
+face_cart player1 banana0 cart1
+drop_food_cart player1 banana0 cart1 banana0
+grab_cart_random_move player1 cart1
+navigate player1 banana0 counter
 release_cart player1 cart1
 face_object player1 counter cart1
 buy player1
@@ -23,15 +65,33 @@ face_cart player1 counter cart1
 grab_cart_exit player1 cart1
 navigate player1 counter exit
 5
-shop player1 -> m0_init 448 17 21
-do_get_cart player1 cart1 -> m2_do_get_cart 452 454
-shop player1 -> m0_shop 456 57 63
-do_get_item player1 cheese_wheel0 cart1 -> m3_do_get_item 460 463 465 469 471 474
-shop player1 -> m0_shop 477 164 195
-do_get_item player1 fresh_fish0 cart1 -> m3_do_get_item 481 484 486 489 492 495
-shop player1 -> m0_buy 498 368 582
-do_buy player1 -> m4_do_buy 503 507 515 533 551
-do_navigate player1 entrance pickup_cart -> m1_do_navigate 449
-do_navigate player1 pickup_cart cheese_wheel0 -> m1_do_navigate 457
-do_navigate player1 cheese_wheel0 fresh_fish0 -> m1_do_navigate 478
-shop player1 -> m0_exit 583
+shop player1 -> m0_init 4578 17 22
+do_get_cart player1 cart1 -> m2_do_get_cart 4581 4583
+shop player1 -> m0_shop 4584 62 70
+do_get_item player1 oranges0 cart1 -> m3_do_get_item 4588 4591 4594 4597 4600 4603
+shop player1 -> m0_shop 4605 193 237
+do_get_item player1 ham0 cart1 -> m3_do_get_item 4609 4612 4615 4618 4621 4624
+shop player1 -> m0_shop 4626 626 656
+do_get_item player1 sausage0 cart1 -> m3_do_get_item 4631 4634 4640 4643 4646 4650
+shop player1 -> m0_shop 4652 1242 1273
+do_get_item player1 lettuce0 cart1 -> m3_do_get_item 4658 4662 4667 4673 4675 4679
+shop player1 -> m0_shop 4682 1818 1849
+do_get_item player1 cheese_wheel0 cart1 -> m3_do_get_item 4688 4692 4698 4702 4705 4709
+shop player1 -> m0_shop 4714 2417 2448
+do_get_item player1 yellow_bell_pepper0 cart1 -> m3_do_get_item 4718 4722 4728 4732 4736 4739
+shop player1 -> m0_shop 4741 3047 3078
+do_get_item player1 raspberry0 cart1 -> m3_do_get_item 4748 4753 4759 4762 4765 4769
+shop player1 -> m0_shop 4772 3705 3736
+do_get_item player1 banana0 cart1 -> m3_do_get_item 4778 4782 4788 4792 4796 4799
+shop player1 -> m0_buy 4803 4396 5074
+do_buy player1 -> m4_do_buy 4809 4813 4822 4851 4949
+do_navigate player1 entrance pickup_cart -> m1_do_navigate 4579
+do_navigate player1 pickup_cart oranges0 -> m1_do_navigate 4585
+do_navigate player1 oranges0 ham0 -> m1_do_navigate 4606
+do_navigate player1 ham0 sausage0 -> m1_do_navigate 4627
+do_navigate player1 sausage0 lettuce0 -> m1_do_navigate 4653
+do_navigate player1 lettuce0 cheese_wheel0 -> m1_do_navigate 4683
+do_navigate player1 cheese_wheel0 yellow_bell_pepper0 -> m1_do_navigate 4715
+do_navigate player1 yellow_bell_pepper0 raspberry0 -> m1_do_navigate 4742
+do_navigate player1 raspberry0 banana0 -> m1_do_navigate 4773
+shop player1 -> m0_exit 5075

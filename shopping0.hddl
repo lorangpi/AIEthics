@@ -5,7 +5,7 @@
     (:objects
         player1 - agent
         cart1 - cart
-cheese_wheel0 fresh_fish0 - food
+oranges0 ham0 sausage0 lettuce0 cheese_wheel0 yellow_bell_pepper0 raspberry0 banana0 - food
     )
     (:htn
 :tasks (shop player1)
@@ -17,7 +17,7 @@ cheese_wheel0 fresh_fish0 - food
         (facing void)
         (free_hands player1)
         
-(clear cheese_wheel0) (on cheese_wheel0 fresh_fish0) (on fresh_fish0 list) 
+(clear oranges0) (on oranges0 ham0) (on ham0 sausage0) (on sausage0 lettuce0) (on lettuce0 cheese_wheel0) (on cheese_wheel0 yellow_bell_pepper0) (on yellow_bell_pepper0 raspberry0) (on raspberry0 banana0) (on banana0 list) 
         
         (clear cart)
         
